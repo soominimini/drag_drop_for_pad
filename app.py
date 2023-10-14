@@ -1,4 +1,4 @@
-from flask import Flask, render_template,request
+from flask import Flask, render_template,request,redirect, url_for
 
 app = Flask(__name__)
 
@@ -13,7 +13,7 @@ def taking_instruction():
         result = request.data.decode('utf-8')
         f.write(result)
         f.close()
-        return render_template('home.html', val = result)
+        return redirect(url_for('home'))
 
 
 @app.route('/home')

@@ -9,41 +9,52 @@
     <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
-    <div class="container">
-        <form id = "data-send" name = "data-send">
+<div class="container">
+    <form id="data-send" name="data-send">
 
-<button onclick="test()" type="button" class="btn btn-primary">End</button>
-</form>
-        <h1>Drag and Drop</h1>
-        <div class="drop-targets">
+        <button onclick="test()" type="button" class="btn btn-primary">End</button>
+    </form>
+    <h1>Drag and Drop</h1>
+    <div class="drop-targets">
 
-            <div class="cart">
-                <img id="drop_cart" data-target-id="grocery" src="../static/shopping-cart.png">
-            </div>
+        <div class="cart">
+            <img id="drop_cart" data-target-id="grocery" src="../static/shopping-cart.png">
         </div>
-
-        <div class="object">
-
-
-                <div class="item">
-                        <img id="apple" data-source-id="grocery" src="../static/apple.png">
-                </div>
-
-        <div class="item">
-                    <img id="orange" data-source-id="grocery" src="../static/orange.png">
-                </div>
-        <div class="item">
-                    <img id="bag" data-source-id="school" src="../static/bag.png">
-                </div>
-        <div class="item">
-                    <img id="pineapple" data-source-id="grocery" src="../static/pineapple.png">
-                </div>
-            </div>
-
     </div>
 
-    </body>
-<script type = "text/javascript" src = "{{ url_for('static', filename = 'app.js') }}" ></script>
+    <div class="object">
+        <div class="item">
+            <img id="apple" data-source-id="grocery" src="../static/apple.png">
+        </div>
+        <div class="item">
+            <img id="orange" data-source-id="grocery" src="../static/orange.png">
+        </div>
+        <div class="item">
+            <img id="bag" data-source-id="grocery" src="../static/cherries.png">
+        </div>
+        <div class="item">
+            <img id="pineapple" data-source-id="grocery" src="../static/pineapple.png">
+        </div>
+    </div>
+    <div class="object">
+        <div class="item">
+            <img id="apple" data-source-id="school" src="../static/ruler.png">
+        </div>
+        <div class="item">
+            <img id="orange" data-source-id="school" src="../static/pencil.png">
+        </div>
+        <div class="item">
+            <img id="bag" data-source-id="school" src="../static/eraser.png">
+        </div>
+        <div class="item">
+            <img id="pineapple" data-source-id="school" src="../static/crayons.png">
+        </div>
+    </div>
+
+</div>
+
+</body>
+<script type="text/javascript" src="{{ url_for('static', filename = 'app.js') }}"></script>
 
 </body>
 
