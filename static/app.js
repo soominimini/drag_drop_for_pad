@@ -69,12 +69,27 @@ function drop(drop_e) {
         console.log(document.getElementById(currentId));
         document.getElementById(currentId).classList.add('hide');
 
+        var socket = io();
+            socket.on('connect', function () {
+                socket.emit('object', {data: draggable });
+            });
+            socket.on('connect', function () {
+                socket.emit('score', {data: 'correct \ answer'});
+            });
+
 
         // tagArea.appendChild(new_hTag);
     }
     else{
         console.log("wrong answer");
         score-=1;
+         var socket = io();
+            socket.on('connect', function () {
+                socket.emit('object', {data: draggable });
+            });
+            socket.on('connect', function () {
+                socket.emit('score', {data: 'wrong \ answer'});
+            });
     }
 
 }
@@ -82,18 +97,9 @@ function drop(drop_e) {
 
 function test() {
 
-  console.log(score)
-  $.ajax({
-    type: "POST",
-    url: '/',
-    data: score,
-    contentType: false,
-    processData: false,
-    success: (res) => {
-      console.log(res);
-    },
-      error : function(xtr,status,error){
-                                alert(xtr,status,error);
-                        }
-  });
+  console.log(score);
+      var socket = io();
+        socket.on('connect', function() {
+        socket.emit('score', {data: currentScore});
+});
 }
