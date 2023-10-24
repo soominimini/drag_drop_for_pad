@@ -41,11 +41,11 @@ function dragOver(e) {
 }
 
 function dragLeave(e) {
+     // e.preventDefault();
     e.target.classList.remove('drag-over');
 }
 
 function drop(drop_e) {
-
 
     // const dataSourceId = e.target.getAttribute('data-target-id');
     const dataTargetId = drop_e.target.getAttribute('data-target-id');
@@ -67,8 +67,11 @@ function drop(drop_e) {
         console.log(currentId);
         // e.target.classList.add('hide');
         console.log(document.getElementById(currentId));
-        document.getElementById(currentId).classList.add('hide');
-
+        // document.getElementById(currentId).classList.add('hide');
+        document.getElementById(currentId).style.visibility='hidden';
+        //먼저 hiddem을 하고
+        draggable.preventDefault();
+        // prevent
         var socket = io();
             socket.on('connect', function () {
                 socket.emit('object', {data: draggable });

@@ -13,13 +13,21 @@ socketio = SocketIO(app)
 # f = open("log.txt", 'w')
 
 
-@socketio.on('object')
-def handle_my_custom_event(obj):
+@socketio.on('object_list')
+def correct_answer(obj):
     print(str(obj))
 
-@socketio.on('score')
+@socketio.on('wrong')
 def score_handle_from_html(data):
     print(str(data))
+
+@socketio.on('connect event')
+def test_connect(message):
+	print("connected")
+
+@socketio.on('disconnect')
+def test_connect(message):
+	print("disconnected")
 
 
 @app.route('/')
