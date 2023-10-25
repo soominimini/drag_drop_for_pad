@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 제이쿼리, 제이쿼리ui-->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <!--   <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>-->
+    <!-- touch punch는 jquery ui 아래에 위치해야함 -->
+    <title>JavaScript - Drag and Drop Demo</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Title</title>
+</head>
+<script>
+    {#var socket = io.connect('http://192.168.100.2:5000');#}
+    console.log("first socket:", socket);
+    var socket = io.connect('http://127.0.0.1:5000/');
+    socket.emit('connect event', {data: 'User Connected'});
+    {#$('input.sync').on('click', function(event) {#}
+    {#       socket.emit('my event1', {who: $(this).attr('id') , data : "none" , name: "Introduction"#}
+    {#     });#}
+    {#       return false;#}
+    {#   });#}
+
+
+    function for_emit(dragged_item) {
+        console.log("success to call");
+        {#var socket = io.connect('http://192.168.100.2:5000');#}
+        var socket = io.connect('http://127.0.0.1:5000/');
+        console.log(socket);
+        socket.emit('object_list', {data: dragged_item}); //emit the information of dragged item
+    }
+
+    var score = 0;
+
+    $(function () {
+        $(".item").draggable({
+            revert: "invalid",
+            helper: "clone"
+        });
+
+        $(".cart").droppable({
+            drop: handleDropEvent,
+            hoverClass: 'drag-over'
+
+        });
+    });
+
+    function handleDropEvent(event, ui) {
+        var draggable = ui.draggable;
+        var dragged_item = draggable[0].children[0].getAttribute('id'); // dragged item
+        var dragged_item_category = draggable[0].children[0].attributes[1].value; // dragged item category
+        {#event.target.classList.add('drag-over');#}
+        if (dragged_item_category == "grocery") { //based on the type
+            score += 1;
+            for_emit(dragged_item);
+            $('#' + dragged_item).hide();
+
+        }
+        else {
+            score -= 1;
+            socket.emit('connect event', {data: dragged_item}) //emit the information of dragged item
+        }
+    }
+
+</script>
+<body>
+<div class="container">
+    <form id="data-send" name="data-send">
+
+        <input type="button" value="End" onclick="location.href = '/';"/>
+    </form>
+    <h1>Drag and Drop</h1>
+    <div class="drop-targets">
+
+        <div class="cart">
+            <img id="drop_cart" data-target-id="grocery" src="../static/shopping-cart.png">
+        </div>
+    </div>
+    <div class="object">
+        <div class="item">
+            <img id="eraser" data-source-id="grocery" src="../static/eraser.png">
+        </div>
+        <div class="item">
+            <img id="crayons" data-source-id="grocery" src="../static/crayons.png">
+        </div>
+        <div class="item">
+            <img id="pencil" data-source-id="grocery" src="../static/pencil.png">
+        </div>
+        <div class="item">
+            <img id="bag" data-source-id="grocery" src="../static/bag.png">
+        </div>
+        <div class="item">
+            <img id="ruler" data-source-id="grocery" src="../static/ruler.png">
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>
