@@ -3,15 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <!-- 제이쿼리, 제이쿼리ui-->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <!--   <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>-->
+    <!-- touch punch는 jquery ui 아래에 위치해야함 -->
     <title>JavaScript - Drag and Drop Demo</title>
     <link rel="stylesheet" href="../static/style.css">
-    <title>home</title>
 </head>
-<body>
-<form id="data-send" name="data-send">
+<script>
+    {#var socket = io.connect('http://192.168.100.2:5000');#}
+    console.log("first socket:", socket);
+    var socket = io.connect('http://127.0.0.1:5000/');
+    socket.emit('connect event', {data: 'User Connected'});
+    {#$('input.sync').on('click', function(event) {#}
+    {#       socket.emit('my event1', {who: $(this).attr('id') , data : "none" , name: "Introduction"#}
+    {#     });#}
+    {#       return false;#}
+    {#   });#}
 
-        <input type="button" value="End" onclick="location.href = '/first_page';"/>
-    </form>
+     $(document).ready(function() {
+
+     });
+
+    function for_emit(dragged_item) {
+        console.log("success to call");
+        {#var socket = io.connect('http://192.168.100.2:5000');#}
+        var socket = io.connect('http://127.0.0.1:5000/');
+        console.log(socket);
+        socket.emit('object_list', {data: dragged_item}); //emit the information of dragged item
+    }
+
+
+    function category_choice() {
+        socket.emit('correct') //
+        location.href = '/first_page';
+    }
+    function category_choice_wrong() {
+        socket.emit('wrong') //emit the information of dragged item
+        socket.emit('block_page', {data: "Please choose another building!"}) //emit the information of dragged item
+    }
+
+</script>
+<body>
+<div class="container">
+    <div class="object">
+         <div class="building">
+        <button onclick="category_choice()">
+            <img src="../static/supermarket.png">
+        </button>
+         </div>
+
+        <div class="building">
+        <button onclick="category_choice_wrong()" >
+            <img src="../static/hospital-building.png" style="">
+        </button>
+        </div>
+
+    </div>
+
+</div>
+
+
 </body>
 </html>

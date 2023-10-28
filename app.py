@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, session
 from flask_socketio import SocketIO, emit, join_room
 import time
+import random
 import threading
 
 # import rospy
@@ -16,6 +17,7 @@ socketio = SocketIO(app)
 @socketio.on('first_talk')
 def first_talk_robot(msg):
     print(str(msg))
+    # rospy.sleep(1.0)
     # talktext_pub.publish("I want "+msg)
 
 @socketio.on('giveme_talk')
@@ -33,13 +35,25 @@ def correct_answer(obj):
 @socketio.on('correct')
 def correct_answer(obj):
     # rospy.sleep(1.0)
-    # talktext_pub.publish("Good job")
+    rand_talk = random.randint(0, 3)
+    # if rand_talk == 0:
+    #     talktext_pub.publish("Good job!")
+    # elif rand_talk==1:
+    #     talktext_pub.publish("Well done!")
+    # else:
+    #     talktext_pub.publish("Great!")
     print(str(obj))
 
 
 @socketio.on('wrong')
 def score_handle_from_html(data):
-    # talktext_pub.publish("Try again!")
+    rand_talk = random.randint(0, 3)
+    # if rand_talk == 0:
+    #     talktext_pub.publish("Try again!")
+    # elif rand_talk==1:
+    #     talktext_pub.publish("Choose another one!")
+    # else:
+    #     talktext_pub.publish("Try again! You can do!")
     print(str(data))
 
 
@@ -92,3 +106,5 @@ if __name__ == '__main__':
     # speechSay_pub = rospy.Publisher('/qt_robot/speech/say', String, queue_size=10)
     # talktext_pub = rospy.Publisher('/qt_robot/behavior/talkText', String, queue_size=10)
     socketio.run(app, host='0.0.0.0', debug=True)
+
+
